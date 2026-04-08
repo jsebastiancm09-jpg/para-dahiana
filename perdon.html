@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Para Dahiana</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#ffd1dc;
+    font-family: 'Poppins', sans-serif;
+    overflow:hidden;
+}
+
+/* corazones animados */
+.heart{
+    position:absolute;
+    color:#ff4f8b;
+    animation:flotar 6s linear infinite;
+}
+
+@keyframes flotar{
+    0%{ transform:translateY(100vh); opacity:0;}
+    50%{opacity:1;}
+    100%{ transform:translateY(-10vh); opacity:0;}
+}
+
+.card{
+    background:white;
+    padding:40px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+    width:350px;
+    z-index:10;
+}
+
+h1{
+    font-family:'Pacifico', cursive;
+    color:#ff4f8b;
+    margin:0;
+}
+
+h2{
+    margin-top:15px;
+    font-weight:normal;
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:20px;
+}
+
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+#si{
+    background:#ff4f8b;
+    color:white;
+}
+
+#no{
+    background:#ddd;
+}
+
+.frase{
+    margin-top:15px;
+    color:#ff4f8b;
+    font-size:14px;
+}
+
+.hidden{
+    display:none;
+}
+
+.foto{
+    width:220px;
+    border-radius:15px;
+    margin:15px 0;
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card" id="pregunta">
+    <h1>Hola Dahiana</h1>
+    <h2>¿Me perdonas mi amor? 🥺</h2>
+
+    <div class="buttons">
+        <button id="si" onclick="aceptar()">Sí 💗</button>
+        <button id="no" onmouseover="mover()">No 🙈</button>
+    </div>
+
+    <div class="frase" id="frase"></div>
+</div>
+
+<div class="card hidden" id="mensaje">
+    <h1>Gracias, mi amor 💖</h1>
+
+    <img src="foto.jpg" class="foto">
+
+    <p>
+    Prometo escucharte, respetarte y mejorar cada día contigo.<br><br>
+    El mundo sin ti no me lo imagino.<br><br>
+    Te amo.
+    </p>
+</div>
+
+<script>
+
+let primeraVez = true;
+let index = 0;
+
+const frases = [
+"Por favor 🥺❤️",
+"Tú no querías decir eso 😢",
+"Ups... botón equivocado 🤭",
+"Eso fue un misclick 😳",
+"Inténtalo otra vez 💕",
+"No seas así conmigo 🥹",
+"Di que sí mi amor ❤️"
+];
+
+function mover(){
+    const boton = document.getElementById("no");
+    const frase = document.getElementById("frase");
+
+    if(primeraVez){
+        boton.style.position = "absolute";
+        primeraVez = false;
+    }
+
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+
+    boton.style.left = x + "px";
+    boton.style.top = y + "px";
+
+    frase.textContent = frases[index % frases.length];
+    index++;
+}
+
+function aceptar(){
+    document.getElementById("pregunta").classList.add("hidden");
+    document.getElementById("mensaje").classList.remove("hidden");
+}
+
+/* corazones */
+function crearCorazones(){
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.fontSize = (Math.random()*20 + 10) + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },6000);
+}
+
+setInterval(crearCorazones,300);
+
+</script>
+
+</body>
+</html>
